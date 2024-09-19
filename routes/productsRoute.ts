@@ -8,7 +8,7 @@ productsRoute.use('/:productId/reviews', reviewsRoute);
 
 productsRoute.route('/')
   .get(getProducts)
-  .post(protectRoutes, checkActive, allowedTo('manager', 'admin'), uploadProductImages, resizeImages, createProductValidator, createProduct);
+  .post(protectRoutes, checkActive, uploadProductImages, resizeImages, createProductValidator, createProduct);
 
 productsRoute.route('/:id')
   .get(getProductValidator, getProduct)

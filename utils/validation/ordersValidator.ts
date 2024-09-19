@@ -3,7 +3,7 @@ import { check } from "express-validator";
 import validatorMiddleware from "../../middlewares/validatorMiddleware";
 
 export const createOrderValidator: RequestHandler[] = [
-  check('address').notEmpty().withMessage('user address Required'),
+  check('address').optional(),
   validatorMiddleware
 ]
 

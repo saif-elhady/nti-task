@@ -1,5 +1,5 @@
 import { Coupons } from "../interfaces/coupons";
-import couponsModel from "../models/coupons";
+import couponsModel from "../models/couponsModel";
 import { createOne, deleteOne, getAll, getOne, updateOne } from "./refactorHandler";
 
 export const createCoupon = createOne<Coupons>(couponsModel)

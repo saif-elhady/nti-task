@@ -1,5 +1,5 @@
 export interface FilterData {
-    category?: any;
+  category?: any;
   product?: any;
   user?: any;
 }

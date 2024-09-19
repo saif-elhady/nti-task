@@ -4,6 +4,16 @@ import ApiErrors from "../utils/apiErrors";
 import { ImageFields } from "../interfaces/uploadFields";
 
 const uploadOptions = (): multer.Multer => {
+  // const multerStorage = multer.diskStorage({
+  //   destination: function (req: Request, file: Express.Multer.File, cb) {
+  //     cb(null, 'uploads')
+  //   },
+  //   filename: function (req, file, cb) {
+  //     const ext = file.mimetype.split('/')[1];
+  //     const fileName = `Product-${Date.now()}-cover.jpg`;
+  //     cb(null, fileName)
+  //   }
+  // })
   const multerStorage: multer.StorageEngine = multer.memoryStorage();
 
   const multerFilter = function (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) {

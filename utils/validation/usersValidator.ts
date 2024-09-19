@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import { check } from "express-validator";
 import validatorMiddleware from "../../middlewares/validatorMiddleware";
-import usersModel from "../../models/users";
+import usersModel from "../../models/usersModel";
 import bcrypt from 'bcryptjs';
 
 export const createUserValidator: RequestHandler[] = [
@@ -26,6 +26,9 @@ export const createUserValidator: RequestHandler[] = [
   check('confirmPassword')
     .notEmpty().withMessage('confirm password required')
     .isLength({ min: 6, max: 20 }).withMessage('confirm password length must between 6 and 20 char'),
+  // check('phone')
+  //   .notEmpty().withMessage('Phone number required')
+  //   .isMobilePhone('ar-EG').withMessage('invalid phone number'),
   validatorMiddleware
 ]
 
@@ -71,14 +74,16 @@ export const updateLoggedUserValidator: RequestHandler[] = [
 export const changeLoggedUserPasswordValidator: RequestHandler[] = [
   check('currentPassword')
     .notEmpty().withMessage('current password required')
-    .isLength({ min: 6, max: 20 }).withMessage('current password length must between 6 and 20 char'),
+    .isLength({ min: 6, max: 20 }).withMessage('current password length must between 6 and 20 char')
+    .custom(async (val: string, { req }) => {
+      const user = await usersModel.findById(req.user._id);
+      const isCorrectPassword: boolean = await bcrypt.compare(val, user!.password)
+      if (!isCorrectPassword) { throw new Error('current password invalid') }
+    }),
   check('password')
     .notEmpty().withMessage('password required')
     .isLength({ min: 6, max: 20 }).withMessage('password length must between 6 and 20 char')
     .custom(async (val: string, { req }) => {
-      const user = await usersModel.findById(req.user._id);
-      const isCorrectPassword: boolean = await bcrypt.compare(req.body.currentPassword, user!.password)
-      if (!isCorrectPassword) { throw new Error('current password invalid') }
       if (val !== req.body.confirmPassword) { throw new Error("passwords doesn't match") }
       return true
     }),

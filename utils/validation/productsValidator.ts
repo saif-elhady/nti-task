@@ -1,8 +1,8 @@
 import { RequestHandler } from "express";
 import { check } from "express-validator";
 import validatorMiddleware from "../../middlewares/validatorMiddleware";
-import categoriesModel from "../../models/categories";
-import subCategoriesModel from "../../models/subCategories";
+import categoriesModel from "../../models/categoriesModel";
+import subCategoriesModel from "../../models/subCategoriesModel";
 import { SubCategories } from "../../interfaces/subCategories";
 
 export const createProductValidator: RequestHandler[] = [
@@ -100,6 +100,7 @@ export const updateProductValidator: RequestHandler[] = [
   check('category')
     .optional()
     .isMongoId().withMessage('Invalid Mongo Id')
+    // * Check if category exist
     .custom(async (val) => {
       const category = await categoriesModel.findById(val);
       if (!category) {
@@ -110,6 +111,7 @@ export const updateProductValidator: RequestHandler[] = [
   check('subcategory')
     .optional()
     .isMongoId().withMessage('Invalid Mongo Id')
+    // * Check if subcategory exist
     .custom(async (val, { req }) => {
       const subcategory: SubCategories | null = await subCategoriesModel.findById(val);
       if (!subcategory) {

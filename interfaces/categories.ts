@@ -1,6 +1,6 @@
-import { Document } from 'mongoose';
+import { Document } from "mongoose";
 
 export interface Categories extends Document {
-    name: string;
+  name: string;
   image: string;
 }

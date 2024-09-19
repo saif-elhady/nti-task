@@ -13,7 +13,7 @@ cartsRoute.route('/')
 
 cartsRoute.put('/applyCoupon', applyCoupon)
 
-cartsRoute.route('/:itemId') 
+cartsRoute.route('/:itemId') // TODO: item id is belong to object id
   .put(updateProductQuantityValidator, updateProductQuantity)
   .delete(removeProductFromCartValidator, removeProduct);
 

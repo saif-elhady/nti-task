@@ -8,7 +8,7 @@ export interface Users extends Document {
   image: string;
   role: Role;
   active: boolean;
-  wishlist: Products[];
+  wishlist:Products[];
   passwordChangedAt: Date | number;
   resetCode: string | undefined;
   resetCodeExpireTime: Date | number | undefined;
