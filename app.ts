@@ -16,7 +16,7 @@ let server: Server;
 dotenv.config();
 app.use(express.json({ limit: '10kb' }))
 app.use(cors({
-  origin: ['http://localhost:4200','http://localhost:50550'],
+  origin: ['http://localhost:4200','http://localhost:55257'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
